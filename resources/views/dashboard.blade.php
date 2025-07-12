@@ -89,49 +89,59 @@
       </div>
     </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('success'))
     <script>
-    var suratMasukData = @json($suratMasukData);
-    var suratKeluarData = @json($suratKeluarData);
+      Swal.fire({
+        title: "Berhasil!",
+        text: `{{ session('success') }}`,
+        icon: "success"
+      });
+    </script>
+    @endif
+    <script>
+      
+      var suratMasukData = @json($suratMasukData);
+      var suratKeluarData = @json($suratKeluarData);
 
-    const ctx = document.getElementById('chartSurat').getContext('2d');
-    const chartSurat = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [
-          {
-            label: 'Surat Masuk',
-            backgroundColor: '#0d6efd',
-            data: suratMasukData
-          },
-          {
-            label: 'Surat Keluar',
-            backgroundColor: '#ffc107',
-            data: suratKeluarData
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              stepSize: 1
+      const ctx = document.getElementById('chartSurat').getContext('2d');
+      const chartSurat = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [
+            {
+              label: 'Surat Masuk',
+              backgroundColor: '#0d6efd',
+              data: suratMasukData
+            },
+            {
+              label: 'Surat Keluar',
+              backgroundColor: '#ffc107',
+              data: suratKeluarData
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                stepSize: 1
+              }
             }
           }
         }
+      });
+      function masuk(){
+        window.location.href = '/suratmasuk';
+
       }
-    });
-    function masuk(){
-      window.location.href = '/suratmasuk';
 
-    }
-
-    function keluar(){
-      window.location.href = '/suratkeluar';
-    }
+      function keluar(){
+        window.location.href = '/suratkeluar';
+      }
   </script>
 
 </x-layout>

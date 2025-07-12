@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 // Halaman dashboard setelah login
-Route::get('/dashboard', [HomeController::class, 'index']);
+Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 // Halaman login
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');

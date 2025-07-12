@@ -54,8 +54,6 @@
                     alt="User Image"
                   />
                   <p>
-                    Alexander Pierce - Web Developer
-                    <small>Member since Nov. 2023</small>
                   </p>
                 </li>
                 <!--end::User Image-->
@@ -75,7 +73,7 @@
                 @else
                 <li class="user-header text-bg-primary">
                   <img
-                    src="{{ asset('foto/'. auth()->user()->foto) }}"
+                    src="{{ auth()->user()->foto !== null ? asset('foto/'. auth()->user()->foto) : asset('img/person.png') }}"
                     class="rounded-circle shadow"
                     alt="User Image"
                     style="margin: 0 auto;"
