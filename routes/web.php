@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\SuratKeluarController;
+use App\Models\SuratKeluar;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -31,6 +33,8 @@ Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/updete_profile', [ProfileController::class, 'update'])->name('updete_profile');
 Route::get('/surat-masuk/{id}', [SuratMasukController::class, 'destroy'])->name('surat-masuk.destroy');
 Route::get('/surat-keluar/{id}', [SuratKeluarController::class, 'destroy'])->name('surat-keluar.destroy');
+Route::get('/sinkron-nomor-item', [ArsipController::class, 'sinkronNomorItem'])->name('sinkron.nomor_item');
+
 // Route::resource('surat-masuk', SuratMasukController::class);
 
 

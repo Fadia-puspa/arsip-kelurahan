@@ -126,15 +126,16 @@
   <script src="//cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- JSZip untuk Excel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
     $(document).ready(function () {
         $('#myTable').DataTable({
             dom:
-                "<'row'<'col-sm-6'B><'col-sm-6'f>>" +  // baris 1: tombol dan search
-                "<'row'<'col-sm-12'tr>>" +             // baris 2: tabel
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",   // baris 3: info & pagination
+                "<'row'<'col-sm-6'B><'col-sm-6 text-end'f>>" +  // baris 1: tombol di kiri, search di kanan
+                "<'row'<'col-sm-12'tr>>" +                      // baris 2: tabel
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",            // baris 3: info & pagination
             buttons: [
                 {
                     extend: 'excelHtml5',
@@ -146,4 +147,13 @@
     });
 
   </script>
+   @if (session('hapus'))
+      <script>
+        Swal.fire({
+          title: "Selamat!",
+          text: `{{ session('hapus') }}`,
+          icon: "success"
+        });
+      </script>
+  @endif
 </x-layout>

@@ -118,18 +118,19 @@
   <script>
     $(document).ready(function () {
         $('#myTable').DataTable({
-            dom:
-                "<'row'<'col-sm-6'B><'col-sm-6'f>>" +  // baris 1: tombol dan search
-                "<'row'<'col-sm-12'tr>>" +             // baris 2: tabel
-                "<'row'<'col-sm-5'i><'col-sm-7'p>>",   // baris 3: info & pagination
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    text: 'Export ke Excel',
-                    title: 'Data Export'
-                }
-            ]
-        });
+    dom:
+        "<'row'<'col-sm-6'B><'col-sm-6 text-end'f>>" +  // baris 1: tombol di kiri, search di kanan
+        "<'row'<'col-sm-12'tr>>" +                      // baris 2: tabel
+        "<'row'<'col-sm-5'i><'col-sm-7'p>>",            // baris 3: info & pagination
+    buttons: [
+        {
+            extend: 'excelHtml5',
+            text: 'Export ke Excel',
+            title: 'Data Export'
+        }
+    ]
+});
+
     });
 
   </script>

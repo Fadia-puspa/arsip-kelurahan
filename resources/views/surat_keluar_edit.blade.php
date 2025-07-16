@@ -65,7 +65,7 @@
           </div>
 
           <div class="text-end">
-            <a href="" class="btn btn-secondary">Kembali</a>
+            <a href="/suratkeluar" class="btn btn-secondary">Kembali</a>
             <button type="submit" class="btn btn-success">Simpan Perubahan</button>
           </div>
         </form>

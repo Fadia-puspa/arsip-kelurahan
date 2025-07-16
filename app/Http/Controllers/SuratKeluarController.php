@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SuratKeluarController extends Controller
 {
@@ -12,8 +13,28 @@ class SuratKeluarController extends Controller
      */
     public function index()
     {
-        $suratKeluar = SuratKeluar::orderByDesc('created_at')->get();
-        return view('surat_keluar',compact('suratKeluar'));
+       $kodeUrutan = [
+    'KA', 'PP', 'KI', 'PU', 'AT', 'BM', 'PC', 'PD', 'PK', 'KB',
+    'PH', 'KH', 'PI', 'KP', 'KU', 'KS', 'KT', 'TR', 'LH', 'LI',
+    'BP', 'TM', 'PO', 'KR', 'RR', 'PW', 'PS', 'SO', 'ST', 'PT',
+    'ES', 'PA', 'UD', 'PN', 'KG', 'DL', 'HK', 'RB', 'IP', 'CB', 'TB', 'OT', 'G', 'HM'
+];
+
+$kodeUrutanString = "'" . implode("','", $kodeUrutan) . "'";
+
+$suratKeluar = SuratKeluar::orderByRaw("
+    FIELD(
+      SUBSTRING_INDEX(SUBSTRING_INDEX(kode_klasifikasi, '/', -1), '.', 1),
+      $kodeUrutanString
+    )
+  ")
+  ->orderBy('tanggal', 'ASC')
+  ->get();
+
+
+
+return view('surat_keluar', compact('suratKeluar'));
+
     }
 
     /**
@@ -29,7 +50,12 @@ class SuratKeluarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        SuratKeluar::create($request->all());
+
+    // Panggil sinkronisasi otomatis
+    (new \App\Http\Controllers\ArsipController)->sinkronNomorItem();
+
+    return redirect()->route('surat-keluar.index')->with('success', 'Surat keluar berhasil disimpan dan nomor item disinkron.');
     }
 
     /**
@@ -69,6 +95,6 @@ class SuratKeluarController extends Controller
     $surat->delete();
 
     return redirect('/suratkeluar')
-                     ->with('success', 'Surat berhasil dihapus');
+                     ->with('hapus', 'Surat berhasil dihapus');
     }
 }

@@ -50,7 +50,11 @@
   <!--end::Head-->
   <!--begin::Body-->
   <body class="login-page bg-body-secondary"
-  style="background-image: url('{{ asset('img/gedung.jpg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+  style="background-color: #121f95ed !important; height: 100vh;">
+  <div class="login-box">
+    <!-- Form login di sini -->
+  </div>
+</body>
       <div class="card card-outline card-primary mt-5 mb-5">
         <div class="card-header">
           <a
