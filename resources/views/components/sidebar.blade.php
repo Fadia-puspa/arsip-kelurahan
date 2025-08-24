@@ -44,7 +44,7 @@
                 </li>
                 <li class="nav-item">
                   <a href="/uploadsurat" class="nav-link {{ request()->is('uploadsurat') ? 'active' : '' }}">
-                    <i class="nav-icon bi bi-upload"></i> Upload Surat
+                    <i class="nav-icon bi bi-upload"></i> Input Surat
                   </a>
                 </li>
                 <li class="nav-item">
