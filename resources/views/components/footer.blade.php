@@ -4,6 +4,6 @@
         Copyright &copy; 2025&nbsp;
         <a href="https://barat.jakarta.go.id/kelurahan/cengkareng-barat/ppid?page=waktu-dan-biaya-layanan-informasi" target="_blank" class="text-decoration-none text-primary">ArsipKelurahan</a>.
     </strong>
-    All rights reserved.
+    By.Fadia Puspa Sari
     <!--end::Copyright-->
 </footer>

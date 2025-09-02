@@ -80,7 +80,7 @@
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white text-center py-6">
-        <p>&copy; 2025 Kelurahan Cengkareng Timur. Seluruh hak dilindungi.</p>
+        <p>&copy; 2025 Kelurahan Cengkareng Timur.By. Fadia Puspa Sari</p>
     </footer>
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
