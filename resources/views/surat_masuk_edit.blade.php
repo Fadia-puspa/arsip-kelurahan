@@ -6,7 +6,7 @@
       </div>
 
       <div class="card-body">
-        <form action="{{ route('update_suratmasuk',['id'=>$surat->id]) }}" method="POST">
+        <form action="{{ route('update_suratmasuk',['id'=>$surat->id]) }}" method="POST" enctype="multipart/form-data">
           @csrf
           @method('PUT')
 
@@ -62,6 +62,11 @@
               <label for="keterangan" class="form-label">Keterangan</label>
               <textarea name="keterangan" class="form-control" rows="2">{{ $surat->keterangan }}</textarea>
             </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="berkas" class="form-label"><span class="text-muted" style="font-size: 0.9em;">(biarkan kosong jika tidak ingin diubah)</span></label>
+            <input type="file" name="berkas" class="form-control" accept="application/pdf">
           </div>
 
           <div class="text-end">

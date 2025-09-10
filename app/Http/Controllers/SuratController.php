@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FileSurat;
 use App\Models\SuratKeluar;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
@@ -41,6 +42,7 @@ class SuratController extends Controller
             'uraian'               => 'required|string',
             'keterangan'           => 'nullable|string',
             'jenis_surat'          => 'required|in:masuk,keluar',
+            'file_surat'           => 'required|file|mimes:pdf|max:5120',
         ], [
             'unit_pengolahan.required' => 'Unit Pengolahan wajib diisi.',
             'unit_pencipta.required' => 'Unit Pencipta wajib diisi.',
@@ -53,7 +55,26 @@ class SuratController extends Controller
             'uraian.required' => 'Uraian tidak boleh kosong.',
             'jenis_surat.required' => 'Jenis surat harus dipilih.',
             'jenis_surat.in' => 'Jenis surat harus antara surat masuk atau surat keluar.',
+            'file_surat.file' => 'File surat harus berupa file.',
+            'file_surat.mimes' => 'File surat harus berupa file pdf.',
+            'file_surat.max' => 'File surat maksimal 5MB.',
+            'file_surat.required' => 'File surat wajib diisi.',
         ]);
+
+        if ($request->hasFile('file_surat')) {
+            $file = $request->file('file_surat');
+            $fileName = $validated['jenis_surat'] == 'masuk' ? 'sm_' . $file->getClientOriginalName() : 'sk_' . $file->getClientOriginalName();
+            $file->move(public_path('berkas'), $fileName);
+
+            // Simpan ke tabel file_surat sesuai field: no_item (dari nomor_item), berkas
+            FileSurat::create([
+                'no_item' => $validated['nomor_item'] ?? null,
+                'berkas' => $fileName,
+            ]);
+
+            // Simpan nama file ke $validated jika ingin tetap menyimpan di surat_masuk/keluar
+            $validated['file_surat'] = $fileName;
+        }
 
         if ($validated['jenis_surat'] === 'masuk') {
             SuratMasuk::create($validated);  
@@ -62,10 +83,6 @@ class SuratController extends Controller
             SuratKeluar::create($validated);
             return redirect('/suratkeluar')->with('success', 'Data surat keluar berhasil disimpan.');
         }
-        // dd($request->all());
-
-        
-
     }
 
     /**

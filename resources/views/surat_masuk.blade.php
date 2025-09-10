@@ -93,12 +93,39 @@
                   <td>{{ $surat['tingkat_perkembangan'] }}</td>
                   <td>{{ $surat['keterangan'] }}</td>
                   <td class="{{ auth()->check() !== true ? 'd-none' : '' }}">
-                    <a href="{{ route('surat-masuk.edit', $surat['id']) }}" class="btn btn-sm btn-primary btn-view">
-                      <i class="bi bi-pencil"></i> Edit
-                    </a>
-                    <a href="{{ route('surat-masuk.destroy', $surat['id']) }}" class="btn btn-sm btn-danger btn-view" onclick="return confirm('Yakin ingin menghapus surat ini?')">
-                      <i class="bi bi-trash"></i> Hapus
-                    </a>
+                    <div class="dropdown">
+                      <button class="btn btn-sm btn-secondary dropdown-toggle btn-view" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-list"></i> Aksi
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <a href="{{ route('surat-masuk.edit', $surat['id']) }}" class="dropdown-item">
+                            <i class="bi bi-pencil"></i> Edit
+                          </a>
+                        </li>
+                        <li>
+                          <a href="{{ route('surat-masuk.destroy', ['id' => $surat['id'], 'nomor_item' => $surat['nomor_item']]) }}" class="dropdown-item text-danger" onclick="return confirm('Yakin ingin menghapus surat ini?')">
+                            <i class="bi bi-trash"></i> Hapus
+                          </a>
+                        </li>
+                        @php
+                          $fileSurat = \App\Models\FileSurat::where('no_item', $surat['nomor_item'])->get();
+                          $filePath = null;
+                          $fileUrl = null;
+                          foreach ($fileSurat as $berkas) {
+                            $filePath = public_path('berkas/' . $berkas['berkas']);
+                            $fileUrl = asset('berkas/' . $berkas['berkas']);
+                          }
+                        @endphp
+                        @if ($filePath && file_exists($filePath))
+                        <li>
+                          <a href="{{ $fileUrl }}" class="dropdown-item text-success" target="_blank">
+                            <i class="bi bi-eye"></i> Lihat
+                          </a>
+                        </li>
+                        @endif
+                      </ul>
+                    </div>
                   </td>
                 </tr>
               @endforeach
@@ -118,21 +145,23 @@
   <script>
     $(document).ready(function () {
         $('#myTable').DataTable({
-    dom:
-        "<'row'<'col-sm-6'B><'col-sm-6 text-end'f>>" +  // baris 1: tombol di kiri, search di kanan
-        "<'row'<'col-sm-12'tr>>" +                      // baris 2: tabel
-        "<'row'<'col-sm-5'i><'col-sm-7'p>>",            // baris 3: info & pagination
-    buttons: [
-        {
-            extend: 'excelHtml5',
-            text: 'Export ke Excel',
-            title: 'Data Export'
-        }
-    ]
-});
-
+            dom:
+                "<'row'<'col-sm-6'B><'col-sm-6 text-end'f>>" +  // baris 1: tombol di kiri, search di kanan
+                "<'row'<'col-sm-12'tr>>" +                      // baris 2: tabel
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",            // baris 3: info & pagination
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    text: 'Export ke Excel',
+                    title: 'Data Export',
+                    exportOptions: {
+                        // Hanya kolom sampai "Keterangan" (misal kolom ke-1 sampai ke-11, index 0-10)
+                        columns: [0,1,2,3,4,5,6,7,8,9,10]
+                    }
+                }
+            ]
+        });
     });
-
   </script>
   @if (session('hapus'))
       <script>

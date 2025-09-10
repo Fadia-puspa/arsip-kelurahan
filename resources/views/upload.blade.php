@@ -54,61 +54,63 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label class="form-label">Unit Pengolahan</label>
-                        <input type="text" name="unit_pengolahan" class="form-control" required>
+                        <input type="text" name="unit_pengolahan" class="form-control" required value="{{ old('unit_pengolahan') }}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Unit Pencipta</label>
-                        <input type="text" name="unit_pencipta" class="form-control" required>
+                        <input type="text" name="unit_pencipta" class="form-control" required value="{{ old('unit_pencipta') }}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nomor Berkas</label>
-                        <input type="text" name="nomor_berkas" class="form-control">
+                        <input type="text" name="nomor_berkas" class="form-control" value="{{ old('nomor_berkas') }}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Nomor Item Arsip</label>
-                        <input type="text" name="nomor_item" class="form-control">
+                        <input type="text" name="nomor_item" class="form-control" value="{{ old('nomor_item') }}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Kode Klasifikasi</label>
-                        <input type="text" name="kode_klasifikasi" class="form-control">
+                        <input type="text" name="kode_klasifikasi" class="form-control" value="{{ old('kode_klasifikasi') }}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Uraian Informasi Arsip</label>
-                        <textarea name="uraian" class="form-control" rows="3" required></textarea>
+                        <textarea name="uraian" class="form-control" rows="3" required>{{ old('uraian') }}</textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Tanggal</label>
-                        <input type="date" name="tanggal" class="form-control" required>
+                        <input type="date" name="tanggal" class="form-control" required value="{{ old('tanggal') }}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Jumlah</label>
-                        <input type="number" name="jumlah" class="form-control" required>
+                        <input type="number" name="jumlah" class="form-control" required value="{{ old('jumlah') }}">
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Tingkat Perkembangan</label>
-                        <input type="text" name="tingkat_perkembangan" class="form-control">
+                        <input type="text" name="tingkat_perkembangan" class="form-control" value="{{ old('tingkat_perkembangan') }}">
                     </div>
-
 
                     <div class="mb-3">
                         <label class="form-label">Keterangan</label>
-                        <textarea name="keterangan" class="form-control" rows="2"></textarea>
+                        <textarea name="keterangan" class="form-control" rows="2">{{ old('keterangan') }}</textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="jenis_surat">Jenis Surat:</label>
                         <select name="jenis_surat" id="jenis_surat" class="form-control" required> 
                         <option value="">Jenis Surat</option>
-                        <option value="masuk">Surat Masuk</option>
-                        <option value="keluar">Surat Keluar</option>
+                        <option value="masuk" {{ old('jenis_surat') == 'masuk' ? 'selected' : '' }}>Surat Masuk</option>
+                        <option value="keluar" {{ old('jenis_surat') == 'keluar' ? 'selected' : '' }}>Surat Keluar</option>
                         </select>
-
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="file_surat">File Surat</label>
+                        <input type="file" name="file_surat" id="file_surat" class="form-control" accept="application/pdf">
                     </div>
                 </div>
 
