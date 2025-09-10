@@ -31,8 +31,8 @@ Route::post('/upload_surat', [SuratController::class, 'store']);
 Route::get('/uploadsuratkeluar', [SuratKeluarController::class, 'create']);
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::post('/updete_profile', [ProfileController::class, 'update'])->name('updete_profile');
-Route::get('/surat-masuk/{id}/{nomor_item}', [SuratMasukController::class, 'destroy'])->name('surat-masuk.destroy');
-Route::get('/surat-keluar/{id}/{nomor_item}', [SuratKeluarController::class, 'destroy'])->name('surat-keluar.destroy');
+Route::get('/surat-masuk/{id}/{kode_klasifikasi}', [SuratMasukController::class, 'destroy'])->name('surat-masuk.destroy');
+Route::get('/surat-keluar/{id}/{kode_klasifikasi}', [SuratKeluarController::class, 'destroy'])->name('surat-keluar.destroy');
 Route::get('/sinkron-nomor-item', [ArsipController::class, 'sinkronNomorItem'])->name('sinkron.nomor_item');
 
 // Route::resource('surat-masuk', SuratMasukController::class);

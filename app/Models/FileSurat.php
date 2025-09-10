@@ -12,7 +12,7 @@ class FileSurat extends Model
     protected $table = 'file_surat';
 
     protected $fillable = [
-        'no_item',
+        'klasifikasi',
         'berkas',
     ];
 }

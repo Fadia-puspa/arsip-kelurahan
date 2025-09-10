@@ -80,8 +80,8 @@ return view('surat_masuk', compact('suratMasuk'));
     {
         $surat = SuratMasuk::findOrFail($id);
 
-        // Simpan nomor_item lama sebelum update
-        $oldNomorItem = $surat->nomor_item;
+        // Simpan kode_klasifikasi lama sebelum update
+        $oldNomorItem = $surat->kode_klasifikasi;
 
         // Ambil semua data kecuali file
         $data = $request->except('berkas');
@@ -89,12 +89,12 @@ return view('surat_masuk', compact('suratMasuk'));
         // Update data surat masuk
         $surat->update($data);
 
-        // Ambil nomor_item baru setelah update
-        $newNomorItem = $surat->nomor_item;
+        // Ambil kode_klasifikasi baru setelah update
+        $newNomorItem = $surat->kode_klasifikasi;
 
-        // Jika nomor_item berubah, update juga no_item di FileSurat
+        // Jika kode_klasifikasi berubah, update juga klasifikasi di FileSurat
         if ($oldNomorItem !== $newNomorItem) {
-            FileSurat::where('no_item', $oldNomorItem)->update(['no_item' => $newNomorItem]);
+            FileSurat::where('klasifikasi', $oldNomorItem)->update(['klasifikasi' => $newNomorItem]);
         }
 
         // Jika ada file diunggah
@@ -104,18 +104,18 @@ return view('surat_masuk', compact('suratMasuk'));
             $file->move(public_path('berkas'), $namaFile);
 
             // Hapus file lama jika ada
-            $fileSurats = FileSurat::where('no_item', $newNomorItem)->get();
+            $fileSurats = FileSurat::where('klasifikasi', $newNomorItem)->get();
             foreach ($fileSurats as $fileSurat) {
                 $filePath = public_path('berkas/' . $fileSurat->berkas);
                 if (file_exists($filePath)) {
                     @unlink($filePath);
                 }
             }
-            FileSurat::where('no_item', $newNomorItem)->delete();
+            FileSurat::where('klasifikasi', $newNomorItem)->delete();
 
             // Simpan file baru ke tabel file_surat
             FileSurat::create([
-                'no_item' => $newNomorItem,
+                'klasifikasi' => $newNomorItem,
                 'berkas' => $namaFile,
             ]);
         }
@@ -126,20 +126,20 @@ return view('surat_masuk', compact('suratMasuk'));
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id, $nomor_item)
+    public function destroy($id, $kode_klasifikasi)
     {
         $surat = SuratMasuk::findOrFail($id);
         $surat->delete();
 
         // Hapus file fisik dari folder 'berkas' sesuai field 'berkas'
-        $fileSurats = FileSurat::where('no_item', $nomor_item)->get();
+        $fileSurats = FileSurat::where('klasifikasi', $kode_klasifikasi)->get();
         foreach ($fileSurats as $fileSurat) {
             $filePath = public_path('berkas/' . $fileSurat->berkas);
             if (file_exists($filePath)) {
                 @unlink($filePath);
             }
         }
-        FileSurat::where('no_item', $nomor_item)->delete();
+        FileSurat::where('klasifikasi', $kode_klasifikasi)->delete();
 
         return redirect('/suratmasuk')
                      ->with('hapus', 'Surat berhasil dihapus');

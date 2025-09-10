@@ -85,7 +85,7 @@
                 <th>Jumlah Lembar</th>
                 <th>Tingkat Perkembangan</th>
                 <th>Keterangan</th>
-                <th class="{{ auth()->check() !== true ? 'd-none' : '' }}">Aksi</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -103,24 +103,24 @@
                   <td>{{ $surat['jumlah'] }}</td>
                   <td>{{ $surat['tingkat_perkembangan'] }}</td>
                   <td>{{ $surat['keterangan'] }}</td>
-                  <td class="{{ auth()->check() !== true ? 'd-none' : '' }}">
+                  <td>
                     <div class="dropdown">
                       <button class="btn btn-sm btn-secondary dropdown-toggle btn-view" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-list"></i> Aksi
                       </button>
                       <ul class="dropdown-menu">
                         <li>
-                          <a href="{{ route('surat-keluar.edit', $surat['id']) }}" class="dropdown-item">
+                          <a class="{{ auth()->check() !== true ? 'd-none' : '' }}" href="{{ route('surat-keluar.edit', $surat['id']) }}" class="dropdown-item">
                             <i class="bi bi-pencil"></i> Edit
                           </a>
                         </li>
                         <li>
-                          <a href="{{ route('surat-keluar.destroy', ['id' => $surat['id'], 'nomor_item' => $surat['nomor_item']]) }}" class="dropdown-item text-danger" onclick="return confirm('Yakin ingin menghapus surat ini?')">
+                          <a class="{{ auth()->check() !== true ? 'd-none' : '' }}" href="{{ route('surat-keluar.destroy', ['id' => $surat['id'], 'kode_klasifikasi' => $surat['kode_klasifikasi']]) }}" class="dropdown-item text-danger" onclick="return confirm('Yakin ingin menghapus surat ini?')">
                             <i class="bi bi-trash"></i> Hapus
                           </a>
                         </li>
                         @php
-                          $fileSurat = \App\Models\FileSurat::where('no_item', $surat['nomor_item'])->get();
+                          $fileSurat = \App\Models\FileSurat::where('klasifikasi', $surat['kode_klasifikasi'])->get();
                           $filePath = null;
                           $fileUrl = null;
                           foreach ($fileSurat as $berkas) {

@@ -63,6 +63,10 @@
               <textarea name="keterangan" class="form-control" rows="2">{{ $surat->keterangan }}</textarea>
             </div>
           </div>
+          <div class="mb-3">
+            <label for="berkas" class="form-label"><span class="text-muted" style="font-size: 0.9em;">(biarkan kosong jika tidak ingin diubah)</span></label>
+            <input type="file" name="berkas" class="form-control" accept="application/pdf">
+          </div>
 
           <div class="text-end">
             <a href="/suratkeluar" class="btn btn-secondary">Kembali</a>

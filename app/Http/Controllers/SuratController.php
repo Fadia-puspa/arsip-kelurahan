@@ -33,9 +33,9 @@ class SuratController extends Controller
         $validated = $request->validate([
             'unit_pengolahan'      => 'required|string',
             'unit_pencipta'        => 'required|string|max:255',
-            'nomor_berkas'         => 'nullable|string|max:255',
             'nomor_item'           => 'nullable|string|max:255',
-            'kode_klasifikasi'     => 'nullable|string|max:255',
+            'nomor_berkas'         => 'nullable|string|max:255',
+            'kode_klasifikasi'     => 'required|string|max:255|unique:surat_masuk,kode_klasifikasi|unique:surat_keluar,kode_klasifikasi',
             'tanggal'              => 'required|date',
             'jumlah'               => 'required|integer|min:1',
             'tingkat_perkembangan' => 'nullable|string|max:255',
@@ -46,6 +46,7 @@ class SuratController extends Controller
         ], [
             'unit_pengolahan.required' => 'Unit Pengolahan wajib diisi.',
             'unit_pencipta.required' => 'Unit Pencipta wajib diisi.',
+            'nomor_item.string' => 'Nomor Item harus berupa teks.',
             'nomor_berkas.string' => 'Nomor Berkas harus berupa teks.',
             'tanggal.required' => 'Tanggal wajib diisi.',
             'tanggal.date' => 'Format tanggal tidak valid.',
@@ -59,6 +60,10 @@ class SuratController extends Controller
             'file_surat.mimes' => 'File surat harus berupa file pdf.',
             'file_surat.max' => 'File surat maksimal 5MB.',
             'file_surat.required' => 'File surat wajib diisi.',
+            'kode_klasifikasi.required' => 'Kode Klasifikasi wajib diisi.',
+            'kode_klasifikasi.string' => 'Kode Klasifikasi harus berupa teks.',
+            'kode_klasifikasi.max' => 'Kode Klasifikasi maksimal 255 karakter.',
+            'kode_klasifikasi.unique' => 'Kode Klasifikasi sudah digunakan.',
         ]);
 
         if ($request->hasFile('file_surat')) {
@@ -66,9 +71,9 @@ class SuratController extends Controller
             $fileName = $validated['jenis_surat'] == 'masuk' ? 'sm_' . $file->getClientOriginalName() : 'sk_' . $file->getClientOriginalName();
             $file->move(public_path('berkas'), $fileName);
 
-            // Simpan ke tabel file_surat sesuai field: no_item (dari nomor_item), berkas
+            // Simpan ke tabel file_surat sesuai field: klasifikasi (dari kode_klasifikasi), berkas
             FileSurat::create([
-                'no_item' => $validated['nomor_item'] ?? null,
+                'klasifikasi' => $validated['kode_klasifikasi'] ?? null,
                 'berkas' => $fileName,
             ]);
 

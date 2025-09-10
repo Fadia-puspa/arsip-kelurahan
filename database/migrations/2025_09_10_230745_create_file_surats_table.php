@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('file_surat', function (Blueprint $table) {
             $table->id();
-            $table->string('no_item')->nullable();
+            $table->string('klasifikasi')->nullable();
             $table->string('berkas')->nullable();
             $table->timestamps();
         });
