@@ -99,12 +99,12 @@
                       </button>
                       <ul class="dropdown-menu">
                         <li>
-                          <a class="{{ auth()->check() !== true ? 'd-none' : '' }}" href="{{ route('surat-masuk.edit', $surat['id']) }}" class="dropdown-item">
+                          <a href="{{ route('surat-masuk.edit', $surat['id']) }}" class="dropdown-item {{ auth()->check() !== true ? 'd-none' : '' }}">
                             <i class="bi bi-pencil"></i> Edit
                           </a>
                         </li>
                         <li>
-                          <a class="{{ auth()->check() !== true ? 'd-none' : '' }}" href="{{ route('surat-masuk.destroy', ['id' => $surat['id'], 'kode_klasifikasi' => $surat['kode_klasifikasi']]) }}" class="dropdown-item text-danger" onclick="return confirm('Yakin ingin menghapus surat ini?')">
+                          <a href="{{ route('surat-masuk.destroy', ['id' => $surat['id'], 'kode_klasifikasi' => $surat['kode_klasifikasi']]) }}" class="dropdown-item text-danger {{ auth()->check() !== true ? 'd-none' : '' }}" onclick="return confirm('Yakin ingin menghapus surat ini?')">
                             <i class="bi bi-trash"></i> Hapus
                           </a>
                         </li>
